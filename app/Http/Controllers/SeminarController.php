@@ -35,10 +35,7 @@ class SeminarController extends Controller
     }
 
     function store(Request $request){
-        // foreach ($request->listUser as $key => $value) {
-        //     error_log($value);
-        // }
-        
+
         $final=DB::transaction(function() use($request){
             $seminar = new Seminar();
             $seminar->nama_seminar = $request->nama_seminar;
@@ -70,6 +67,8 @@ class SeminarController extends Controller
             
 
             $userData = collect(json_encode($request->get('listUser')))->collapse();
+            // $userData = $request->get('listUser');
+            error_log($userData);
             foreach ($userData as $l) {
                     $su = new SeminarUser();
                     $su->user_id =$l->nama;
