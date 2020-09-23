@@ -18,7 +18,8 @@
                 </div>
             </div>
             <div class="container">
-                    <a href="/user/create"class="btn btn-primary my-2" style="margin:auto;overflow: auto;">Tambah Data User</a>
+                    <a href="/user/create"class="btn btn-primary my-2 d-inline" style="margin:auto;overflow: auto;">Tambah Data User (Manual)</a>
+                    <a href="/uploadUser"class="btn btn-primary my-2" style="margin:auto;overflow: auto;">Tambah Data User (.xls)</a>
                 </div>
     </div>
     <div class="container">

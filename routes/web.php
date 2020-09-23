@@ -48,6 +48,11 @@ Route::post('/profile/{user}','UserController@edit');
 Route::get('/profile/{id}','UserController@profile');
 Route::get('/profile/{user}/edit','UserController@edit');
 Route::patch('/profile/{id}','UserController@update');
+
+////error selalu nyalahin knp detail ada name ( kan ga ada hbgnnya ya )
+// Route::get('/user/uploadUser','UserController@create');
+///terpaksa buat diluar /user hiks, bkn mauku begitu..
+Route::get('/uploadUser','UserController@upload');
 Auth::routes(['register' => false]);
 
 // Route::get('/home', 'HomeController@index')->name('home');

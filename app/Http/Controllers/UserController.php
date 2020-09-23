@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Topik;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
@@ -40,6 +41,12 @@ class UserController extends Controller
 
     public function create(){
         return view('user.create');
+    }
+
+    public function upload(){
+        $user = User::all();
+        $topik = Topik::all();
+        return view('user.upload', compact('user','topik'));
     }
 
     function store(Request $request){
