@@ -7,6 +7,7 @@ use App\Topik;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
+use Excel;
 
 class UserController extends Controller
 {
@@ -47,6 +48,41 @@ class UserController extends Controller
         $user = User::all();
         $topik = Topik::all();
         return view('user.upload', compact('user','topik'));
+    }
+
+    function import(Request $request)
+    {
+     $this->validate($request, [
+      'select_file'  => 'required|mimes:xls,xlsx'
+     ]);
+
+     $path = $request->file('select_file')->getRealPath();
+
+     $data = Excel::load($path)->get();
+
+     if($data->count() > 0)
+     {
+      foreach($data->toArray() as $key => $value)
+      {
+       foreach($value as $row)
+       {
+        $insert_data[] = array(
+         'CustomerName'  => $row['customer_name'],
+         'Gender'   => $row['gender'],
+         'Address'   => $row['address'],
+         'City'    => $row['city'],
+         'PostalCode'  => $row['postal_code'],
+         'Country'   => $row['country']
+        );
+       }
+      }
+
+      if(!empty($insert_data))
+      {
+       DB::table('tbl_customer')->insert($insert_data);
+      }
+     }
+     return back()->with('success', 'Excel Data Imported successfully.');
     }
 
     function store(Request $request){

@@ -53,6 +53,7 @@ Route::patch('/profile/{id}','UserController@update');
 // Route::get('/user/uploadUser','UserController@create');
 ///terpaksa buat diluar /user hiks, bkn mauku begitu..
 Route::get('/uploadUser','UserController@upload');
+Route::post('/uploadUser/import','UserController@import');
 Auth::routes(['register' => false]);
 
 // Route::get('/home', 'HomeController@index')->name('home');

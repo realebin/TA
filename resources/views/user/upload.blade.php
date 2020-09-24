@@ -23,12 +23,18 @@
             <h6 align="center">Jika menambahkan user dari sini, user akan otomatis menjadi Guest</h6> 
             <h6 align="center">Gunakan template yang sudah disediakan, jangan ada bagian yang kosong</h6> 
             <h6 align="center">(Misalkan pada baris yang sama ada data yang terisi tapi kolom lainnya dibiarkan kosong)</h6> 
-            <div class="card-body">
+            <div class="container" align="center">
+			<br/>
+				<td align="right"><label>Select File for Upload &nbsp; &nbsp;</label></td>
+				<td>
+					<input type="file" name="select_file"/>
+				</td>
+	   		</div>
+			<div class="card-body">
 			    <div align="right" style="margin-bottom:5px;">
-				    <button type="button" name="add" id="add" class="btn btn-success btn-xs">Add</button>
+        			<input type="submit" name="upload" class="btn btn-primary" value="Upload">
 			    </div>
-			    <br />
-			    <!-- <form method="post" id="seminar"> -->
+			    <br/>
 				    <div class="table-responsive">
 					    <table class="table table-striped table-bordered" id="user_data" name="user_data">
 						    <tr>
@@ -45,30 +51,25 @@
 			    <!-- </form> -->
 			    <br />
 		    </div>
-            <div id="user_dialog" title="Add Data">
-                <div class="form-group">
-                    <label>Masukkan Nama</label>
-                    <select name="nama" id="nama" class="mdb-select md-form colorful-select dropdown-primary combox">
-                        @foreach($user as $u)
-                        <option></option>
-                            <option value="{{$u->id}}">{{$u->name}}</option>
-                        @endforeach
-                    </select>
-                    <br/>
-                    <!-- <input type="text" name="nama" id="nama" class="form-control" /> -->
-                    <span id="error_nama" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label>Masukkan Email</label>
-                    <input type="text" name="email" id="email" class="form-control" />
-                    <span id="error_email" class="text-danger"></span>
-                </div>
-                <div class="form-group" align="center">
-                    <input type="hidden" name="row_id" id="hidden_row_id" />
-                    <button type="button" name="save" id="save" class="btn btn-info">Save</button>
-                </div>
-            </div>
+
 		    <div id="action_alert" title="Action">
+			@if(count($errors) > 0)
+				<div class="alert alert-danger">
+				Upload Validation Error<br><br>
+				<ul>
+				@foreach($errors->all() as $error)
+				<li>{{ $error }}</li>
+				@endforeach
+				</ul>
+				</div>
+			@endif
+
+			@if($message = Session::get('success'))
+			<div class="alert alert-success alert-block">
+				<button type="button" class="close" data-dismiss="alert">×</button>
+					<strong>{{ $message }}</strong>
+			</div>
+			@endif
             </div>
 		</div>
 
