@@ -14,6 +14,7 @@ class TableSeminar extends Migration
     public function up()
     {
         Schema::create('table_seminar', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->bigIncrements('id_seminar');
             $table->dateTimeTz('waktu');
             $table->string('nama_seminar');

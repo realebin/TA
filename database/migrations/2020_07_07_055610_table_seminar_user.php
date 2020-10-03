@@ -14,6 +14,8 @@ class TableSeminarUser extends Migration
     public function up()
     {
         Schema::create('table_seminar_user', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
+            $table->engine = 'InnoDB';
             $table->bigIncrements('id_su');
             $table->bigInteger('no_sertifikat');
             $table->string('cetak_sertifikat');

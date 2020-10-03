@@ -92,7 +92,7 @@
                                 Penyelenggara
                                 </td>
                                 <td>
-                                b
+                                {{$penyelenggara->user->name}}
                                 </td>
                             </tr>
                             <tr>
@@ -100,19 +100,50 @@
                                 Pembicara
                                 </td>
                                 <td>
-                                b
+                                {{$pembicara->user->name}}
                                 </td>
                             </tr>
 
-
-                            <!-- <tr>
-                                <td>
-                                a
-                                </td>
-                                <td>
-                                b
-                                </td>
-                            </tr> -->
+                            @if($etc->count()!=0)
+                                <tr>
+                                    <td td colspan="2">
+                                    <br/>
+                                    <br/>
+                                    <br/>
+                                        <h3 align="center">Daftar User Lain yang Terlibat pada Seminar</h3>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td td colspan="2">
+                                <br/>
+                                <br/>
+                                        <table id="dt">
+                                            <thead>
+                                                <tr>
+                                                <th>
+                                                Nama
+                                                </th>
+                                                <th>
+                                                Sebagai
+                                                </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            @foreach($etc as $a)
+                                                <tr>
+                                                    <td>
+                                                    {{$a->user->name}}
+                                                    </td>
+                                                    <td>
+                                                    {{$a->sebagai}}
+                                                    </td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                            @endif
 
 
                             <tr>

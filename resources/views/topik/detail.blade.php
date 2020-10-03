@@ -1,13 +1,6 @@
 @extends('layout/main')
 @section('title','Detail Topik')
 
-<!-- @section('back_button') -->
-<!-- <div class="col-1 my-0 mx-3 ml-5 " style="text-align: center;"> -->
-            <!-- &#60; teh < -->
-            <!-- <a href="/topik" class="btn btn-primary"> &#60;Back </a> -->
-        <!-- </div> -->
-<!-- @endsection -->
-
 @section('container')
 <div class="container-fluid" >
 

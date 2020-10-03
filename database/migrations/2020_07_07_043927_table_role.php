@@ -14,6 +14,7 @@ class TableRole extends Migration
     public function up()
     {
         Schema::create('table_role', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->bigIncrements('id_role');
             $table->string('nama_role');
             $table->timestamps();

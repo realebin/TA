@@ -25,9 +25,6 @@ class Seminar extends Model
     }
     public function topik()
     {
-        // return $this->belongsTo('App\Topik','id_topik');
         return $this->belongsTo('App\Topik', 'topik_id');
-        // dd($this->belongsTo('App\Topik'));
-        // return $this->hasMany('App\Topik','id_topik');
     }
 }

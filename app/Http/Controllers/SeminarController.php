@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use DateTime;
 use DB;
+use Session;
 
 class SeminarController extends Controller
 {
@@ -23,10 +24,14 @@ class SeminarController extends Controller
         // dd($id_seminar);
         ////->first() kalo cmn satu
         $seminar = Seminar::LeftJoin('table_sfile','id_seminar','seminar_id')->where('id_seminar','=',$id_seminar)->first();
+        $penyelenggara = SeminarUser::where('sebagai','=','Penyelenggara')->where('seminar_id','=',$id_seminar)->first();
+        $pembicara = SeminarUser::where('sebagai','=','Pembicara')->where('seminar_id','=',$id_seminar)->first();
+        $etc = SeminarUser::where('sebagai','!=','Pembicara')->where('sebagai','!=','Penyelenggara')->where('seminar_id','=',$id_seminar)->get();
+
         // $seminar = Seminar::where('id_seminar','=',$id_seminar)->first();
         // compat sama dengan yng ['Seminar'=>$seminar]
         // dd($seminar);
-        return view('seminar.detail', compact('seminar'));
+        return view('seminar.detail', compact('seminar','penyelenggara','pembicara','etc'));
     }
     public function create(){
         $topik = Topik::select('id_topik', 'nama_topik')->get();
@@ -46,7 +51,6 @@ class SeminarController extends Controller
             $seminar->durasi = ((new DateTime($request['waktu_selesai']))->diff(new DateTime($request['waktu_mulai'])))->format('%h jam %i menit' );
             $seminar->save();
 
-            // error_log($seminar->id_seminar);
             $pb = new SeminarUser();
             $pb->user_id = $request->input('pb');
             $pb->sebagai = "Pembicara";
@@ -64,26 +68,28 @@ class SeminarController extends Controller
             $py->cetak_sertifikat =" ";
             $py->pesan_sertifikat =" ";
             $py->save();
-            
 
-            $userData = collect(json_encode($request->get('listUser')))->collapse();
-            // $userData = $request->get('listUser');
-            error_log($userData);
-            foreach ($userData as $l) {
-                    $su = new SeminarUser();
-                    $su->user_id =$l->nama;
-                    $su->sebagai = $l['sebagai'];
-                    $su->seminar_id = $seminar->id_seminar;
-                    $su->no_sertifikat = 0;
-                    $su->cetak_sertifikat = " ";
-                    $su->pesan_sertifikat = " ";
-                    $su->save();
-                
+            if($request->list_user_nama!=null){
+                $user_name = $request->list_user_nama;
+                $user_role = $request->list_user_role;
+                foreach ($user_name as $key => $value) {
+                        $su = new SeminarUser();
+                        $su->user_id = $value;
+                        $su->sebagai = $user_role[$key];
+                        $su->seminar_id = $seminar->id_seminar;
+                        $su->no_sertifikat = 0;
+                        $su->cetak_sertifikat = " ";
+                        $su->pesan_sertifikat = " ";
+                        $su->save();
+                }
             }
-            
-            return redirect('/seminar')->with('status','Data Seminar berhasil ditambah!');
+            ////flash = sekali pake doang ntr ilang 
+            Session::flash('status','Success Add Data');
+            return response()->json(["message"=>"Success"],200);
         });
-        return $final;
+        return response()->json(["message"=>"Success"],200);
+
+
     }
 
     public function destroy(Seminar $seminar){

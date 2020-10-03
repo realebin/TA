@@ -14,6 +14,7 @@ class TableTopik extends Migration
     public function up()
     {
         Schema::create('table_topik', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->bigIncrements('id_topik');
             $table->string('nama_topik');
             $table->timestamps();

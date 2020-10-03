@@ -14,6 +14,7 @@ class CreateUsersTable extends Migration
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
@@ -25,6 +26,7 @@ class CreateUsersTable extends Migration
             $table->bigInteger('role_id')->unsigned();
             $table->foreign('role_id')->references('id_role')->on('table_role');
             $table->string('username');
+            $table->string('gender');
             $table->string('alamat_user');
             $table->string('telepon_user');
         });

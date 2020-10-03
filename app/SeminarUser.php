@@ -11,6 +11,10 @@ class SeminarUser extends Model
 
     public function user()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\User','user_id');
+    }
+    public function seminar()
+    {
+        return $this->belongsTo('App\Seminar','seminar_id');
     }
 }

@@ -56,6 +56,7 @@ class RegisterController extends Controller
             'username' => ['required', 'string', 'max:20', 'unique:users'],
             'telepon_user' => ['required', 'string', 'min:8'],
             'alamat_user' => ['required', 'string', 'min:5'],
+            'gender' => ['required', 'string', 'min:2'],
         ]);
     }
 
@@ -75,6 +76,7 @@ class RegisterController extends Controller
             'username' => $data['username'],
             'telepon_user' => $data['telepon_user'],
             'alamat_user' => $data['alamat_user'],
+            'gender' => $data['gender'],
         ]);
     }
 }

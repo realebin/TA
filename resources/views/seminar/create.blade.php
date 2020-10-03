@@ -361,8 +361,8 @@ $(document).ready(function(){
 			{
 				count = count + 1;
 				output = '<tr id="row_'+count+'">';
-				output += '<td>'+nama+' <input type="hidden" name="hidden_nama[]" id="nama'+count+'" class="nama" value="'+nama+'" /></td>';
-				output += '<td>'+sebagai+' <input type="hidden" name="hidden_sebagai[]" id="sebagai'+count+'" value="'+sebagai+'" /></td>';
+				output += '<td>'+nama+' <input type="hidden" name="hidden_nama[]" id="nama_user_'+count+'" class="nama" value="'+nama+'" /></td>';
+				output += '<td>'+sebagai+' <input type="hidden" name="hidden_sebagai[]" id="role_'+count+'" value="'+sebagai+'" /></td>';
 				output += '<td><button type="button" name="view_details" class="btn btn-warning btn-xs view_details" id="'+count+'">View</button></td>';
 				output += '<td><button type="button" name="remove_details" class="btn btn-danger btn-xs remove_details" id="'+count+'">Remove</button></td>';
 				output += '</tr>';
@@ -371,8 +371,8 @@ $(document).ready(function(){
 			else
 			{
 				var row_id = $('#hidden_row_id').val();
-				output = '<td>'+nama+' <input type="hidden" name="hidden_nama[]" id="nama'+row_id+'" class="nama" value="'+nama+'" /></td>';
-				output += '<td>'+sebagai+' <input type="hidden" name="hidden_sebagai[]" id="sebagai'+row_id+'" value="'+sebagai+'" /></td>';
+				output = '<td>'+nama+' <input type="hidden" name="hidden_nama[]" id="nama_user_'+row_id+'" class="nama" value="'+nama+'" /></td>';
+				output += '<td>'+sebagai+' <input type="hidden" name="hidden_sebagai[]" id="role_'+row_id+'" value="'+sebagai+'" /></td>';
 				output += '<td><button type="button" name="view_details" class="btn btn-warning btn-xs view_details" id="'+row_id+'">View</button></td>';
 				output += '<td><button type="button" name="remove_details" class="btn btn-danger btn-xs remove_details" id="'+row_id+'">Remove</button></td>';
 				$('#row_'+row_id+'').html(output);
@@ -427,8 +427,14 @@ $(document).ready(function(){
             var deskripsi = $('#deskripsi').val();
             var pb= $('#pb').val();
             var py= $('#py').val();
-            var sebagai= $('input[id^=sebagai]').val();
-            var nama =  $('input[id^=nama]').val();
+            var sebagai = [];
+            var nama = [];
+            $('input[id*=nama_user_]').each(function(index,element){
+                nama.push( $(element).val() )
+            });
+            $('input[id*=role_]').each(function(index,element){
+                sebagai.push( $(element).val() )
+            });
             var form_data={
                 nama_seminar : nama_seminar,
                 waktu_mulai : waktu_mulai,
@@ -437,10 +443,8 @@ $(document).ready(function(){
                 deskripsi : deskripsi, 
                 pb :pb,
                 py:py,
-                listUser: {
-                    nama:nama,
-                    sebagai:sebagai,
-                }
+                list_user_nama: nama,
+                list_user_role: sebagai,
             };
 			$.ajaxSetup({
                         headers: {
@@ -450,9 +454,10 @@ $(document).ready(function(){
             $.ajax({
 
 				url:"/seminar",
-				method:"POST",
+				type:"POST",
                 data:form_data,
-                dataType: 'json',
+                // dataType: 'json',
+                // async: false,
             
                 
                 error: function(data){
@@ -461,16 +466,57 @@ $(document).ready(function(){
                 },
 				success:function(data)
 				{
-                    console.log("berhasil");
+                    
 					$('#user_data').find("tr:gt(0)").remove();
-					$('#action_alert').html('<p>Data Inserted Successfully</p>');
+                    location.href = "{{ url('/seminar') }}";
 				}
 			})
 		}
 		else
 		{
-			$('#action_alert').html('<p>Please Add atleast one data</p>');
-			$('#action_alert').dialog('open');
+            var nama_seminar = $('#nama_seminar').val();
+            var waktu_mulai = $('#waktu_mulai').val();
+            var waktu_selesai = $('#waktu_selesai').val();
+            var topik_id = $('#topik_id').val();
+            var deskripsi = $('#deskripsi').val();
+            var pb= $('#pb').val();
+            var py= $('#py').val();
+            
+            var form_data={
+                nama_seminar : nama_seminar,
+                waktu_mulai : waktu_mulai,
+                waktu_selesai : waktu_selesai,
+                topik_id : topik_id,
+                deskripsi : deskripsi, 
+                pb :pb,
+                py:py,
+               
+            };
+			$.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+            $.ajax({
+
+				url:"/seminar",
+				type:"POST",
+                data:form_data,
+                // dataType: 'json',
+                // async: false,
+            
+                
+                error: function(data){
+                    console.log('Error: ',data);
+
+                },
+				success:function(data)
+				{
+                    
+					$('#user_data').find("tr:gt(0)").remove();
+                    location.href = "{{ url('/seminar') }}";
+				}
+			})
 		}
 	});
 	

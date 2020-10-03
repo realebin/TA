@@ -14,8 +14,10 @@ class TableSertifikat extends Migration
     public function up()
     {
         Schema::create('table_sertifikat', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->bigIncrements('id_sertifikat');
             $table->string('nama_sertifikat');
+            $table->string('path');
             $table->timestamps();
             $table->bigInteger('seminar_id')->unsigned();
             $table->foreign('seminar_id')->references('id_seminar')->on('table_seminar');

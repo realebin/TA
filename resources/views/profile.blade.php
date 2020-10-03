@@ -35,6 +35,14 @@
                             </tr>
                             <tr>
                                 <td>
+                                Gender
+                                </td>
+                                <td>
+                                {{$user->gender }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
                                 Email
                                 </td>
                                 <td>

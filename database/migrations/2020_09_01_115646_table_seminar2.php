@@ -14,6 +14,7 @@ class TableSeminar2 extends Migration
     public function up()
     {
         Schema::table('table_seminar', function($table) {
+            $table->engine = 'InnoDB';
             $table->renameColumn('waktu', 'waktu_mulai');
             $table->dateTimeTz('waktu_selesai');
             $table->string('durasi');

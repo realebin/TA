@@ -14,6 +14,7 @@ class TableSfile extends Migration
     public function up()
     {
         Schema::create('table_sfile', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->bigIncrements('id_sfile');
             $table->string('path');
             $table->timestamps();

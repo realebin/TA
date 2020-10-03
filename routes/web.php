@@ -43,6 +43,7 @@ Route::resources([
     'user' => 'UserController',
     'seminar' => 'SeminarController', 
     'topik' =>'TopikController',
+    'sertifikat' =>'SertifikatController',
 ]);
 Route::post('/profile/{user}','UserController@edit');
 Route::get('/profile/{id}','UserController@profile');
@@ -54,6 +55,6 @@ Route::patch('/profile/{id}','UserController@update');
 ///terpaksa buat diluar /user hiks, bkn mauku begitu..
 Route::get('/uploadUser','UserController@upload');
 Route::post('/uploadUser/import','UserController@import');
-Auth::routes(['register' => false]);
+Auth::routes(['register']);
 
 // Route::get('/home', 'HomeController@index')->name('home');
